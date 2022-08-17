@@ -4,8 +4,8 @@
 
 
 // Change YOUR_AP_NAME and YOUR_AP_PASSWORD to your WiFi credentials
-const char *ssid = "Zetland";       // Put your SSID here
-const char *password = "bumface98"; // Put your PASSWORD here
+const char *ssid = "XXXX";       // Put your SSID here
+const char *password = "XXXX"; // Put your PASSWORD here
 
 
   // AI Thinker
