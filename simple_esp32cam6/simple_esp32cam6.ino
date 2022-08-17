@@ -36,11 +36,11 @@ const char *password = "XXXX"; // Put your PASSWORD here
 static camera_config_t camera_config = {
     .pin_pwdn = PWDN_GPIO_NUM,
     .pin_reset = RESET_GPIO_NUM,
-        .pin_xclk = XCLK_GPIO_NUM,
+    .pin_xclk = XCLK_GPIO_NUM,
     .pin_sscb_sda = SIOD_GPIO_NUM,
     .pin_sscb_scl = SIOC_GPIO_NUM,
     .pin_d7 = Y9_GPIO_NUM,
-        .pin_d6 = Y8_GPIO_NUM,
+    .pin_d6 = Y8_GPIO_NUM,
     .pin_d5 = Y7_GPIO_NUM,
     .pin_d4 = Y6_GPIO_NUM,
     .pin_d3 = Y5_GPIO_NUM,
@@ -53,7 +53,7 @@ static camera_config_t camera_config = {
     .pin_pclk = PCLK_GPIO_NUM,
     .xclk_freq_hz = 20000000,
 
-            .ledc_timer = LEDC_TIMER_0,
+    .ledc_timer = LEDC_TIMER_0,
 
     .ledc_channel = LEDC_CHANNEL_0,
 
@@ -65,7 +65,7 @@ static camera_config_t camera_config = {
 
     .jpeg_quality = 10, //0-63 lower number means higher quality
     .fb_count = 1 //if more than one, i2s runs in continuous mode. Use only with JPEG
-    //.grab_mode = CAMERA_GRAB_WHEN_EMPTY//CAMERA_GRAB_LATEST. Sets when buffers should be filled
+    //.grab_mode = CAMERA_GRAB_WHEN_EMPTY//CAMERA_GRAB_LATEST. Sets when buffers should be filled. doesn't work
 };
 
 esp_err_t camera_init(){
@@ -87,11 +87,9 @@ esp_err_t camera_init(){
 }
 
 
-
-
 camera_fb_t * resultFrame = new camera_fb_t();
 
-uint8_t * img_buf_bg = NULL; //new uint8_t[19200];
+uint8_t * img_buf_bg = NULL; 
 
 camera_fb_t * diff(camera_fb_t * fb){
    Serial.println("diffing");
@@ -123,19 +121,11 @@ camera_fb_t * diff(camera_fb_t * fb){
            x = 0;
         }
 
-        //uint16_t pb = m_backgroundFrame->getPixel( i ); //fixme
-        //uint16_t pf = frame->getPixel( i );
         uint16_t pb = fb->buf[ i ];
         uint16_t pf = img_buf_bg[ i ];
-        //Serial.print("pf - pb");
-        //Serial.println(pf - pb);
- 
+
         if( ( pf > pb && pf - pb > delta ) || ( pf < pb && pb - pf > delta )) {
             // different from background
-            //resultFrame->setPixel( i, pf ); //fixme
-            //Serial.println("DIFFERENT");
-            //Serial.println(pf - pb);
-            ///resultFrame->buf[ i ] = (uint8_t) pf;
             resultFrame->buf[ i ] = (uint8_t) 255;//???
 
             sumX += x;
@@ -143,10 +133,6 @@ camera_fb_t * diff(camera_fb_t * fb){
             sumN ++;
          } else {
             // same-ish as background
-            //resultFrame->setPixel( i, 0 ); //fixme
-            //Serial.println("SAME");
-            //Serial.println(pf - pb);
-            //resultFrame->buf[ i ] = (uint8_t) 255;
             resultFrame->buf[ i ] = (uint8_t) 0;
          }
    }
