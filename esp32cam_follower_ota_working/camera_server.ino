@@ -19,24 +19,24 @@ static esp_err_t stream_handler(httpd_req_t *req){
     return res;
   }
  
-  while(true){
+ while(true){
     fb = esp_camera_fb_get();
  
     if (!fb) {
       Serial.println("Camera capture failed");
       res = ESP_FAIL;
-    } else {
-          //camera_fb_t * rf =  fb; //set to fb to test
-          camera_fb_t * rf =  diff(fb); 
+      break;
+    } 
 
-          bool jpeg_converted = frame2jpg(rf, 80, &_jpg_buf, &_jpg_buf_len);
+    diff(fb); 
 
-          ///esp_camera_fb_return(fb);
-          fb = NULL;
-          if(!jpeg_converted){
-            Serial.println("JPEG compression failed");
-            res = ESP_FAIL;
-          }
+    bool jpeg_converted = frame2jpg(fb, 80, &_jpg_buf, &_jpg_buf_len);
+
+    esp_camera_fb_return(fb);
+
+    if(!jpeg_converted){
+      Serial.println("JPEG compression failed");
+      res = ESP_FAIL;
     }
     if(res == ESP_OK){
       size_t hlen = snprintf((char *)part_buf, 64, _STREAM_PART, _jpg_buf_len);
@@ -48,14 +48,12 @@ static esp_err_t stream_handler(httpd_req_t *req){
     if(res == ESP_OK){
       res = httpd_resp_send_chunk(req, _STREAM_BOUNDARY, strlen(_STREAM_BOUNDARY));
     }
-    if(fb){
-      esp_camera_fb_return(fb);
-      fb = NULL;
-      _jpg_buf = NULL;
-    } else if(_jpg_buf){
+
+   if(_jpg_buf){
       free(_jpg_buf);
       _jpg_buf = NULL;
-    }
+   }
+
     if(res != ESP_OK){
       break;
     }
