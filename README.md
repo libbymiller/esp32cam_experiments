@@ -30,10 +30,11 @@ esp32cam.menu.PartitionScheme.min_spiffs.upload.maximum_size=1966080
 ```
 
 for me on mac os x boards.txt is in /Users/libbym/Library/Arduino15/packages/esp32/hardware/esp32/1.0.6/boards.txt
-It looks like on windows it's in the arduo directory somewhere
-it may get overwritten
 
-I used top answer here https://arduino.stackexchange.com/questions/75198/why-doesnt-ota-work-with-the-ai-thinker-esp32-cam-board
-then you need to pick the SPIFFS one in the menu
+It looks like on windows it's in the Arduino directory somewhere
+
+it may get overwritten!
+
+I used the top answer here https://arduino.stackexchange.com/questions/75198/why-doesnt-ota-work-with-the-ai-thinker-esp32-cam-board - then you need to pick the SPIFFS one in the menu.
 
  
