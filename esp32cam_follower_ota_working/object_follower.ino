@@ -1,14 +1,12 @@
 
 int img_buf_len = 19200; //hardcoded but it's FRAMESIZE_QQVGA (160x120) grayscale pixels with 8 bits
 
-camera_fb_t * resultFrame = new camera_fb_t();
-
 uint8_t * img_buf_bg = NULL; //new uint8_t[19200];
 
 float m_attentionX = 0.5;
 float m_attentionY = 0.5;
 
-camera_fb_t * diff(camera_fb_t * fb){
+void diff(camera_fb_t * fb){
    //Serial.println("diffing");
    //first run
    if(!img_buf_bg){
@@ -16,7 +14,6 @@ camera_fb_t * diff(camera_fb_t * fb){
        //create a new buffer based on this one to be our background
        img_buf_bg = new uint8_t[img_buf_len];
        memcpy(img_buf_bg, fb->buf, img_buf_len);
-       return resultFrame;    
    }
 
    //compare bufs
@@ -34,9 +31,6 @@ camera_fb_t * diff(camera_fb_t * fb){
    uint32_t sumY = 0;
    uint32_t sumN = 0;
    uint16_t x = 0, y = 0;
-
-   //just make a copy to use for our results, we replace all the pixels anyhoo
-   memcpy(&resultFrame, &fb, sizeof fb);
 
 //loop over all the pixels in the frame
 //could also  do it by x and y
@@ -62,7 +56,7 @@ camera_fb_t * diff(camera_fb_t * fb){
             //resultFrame->setPixel( i, pf ); //fixme
             //Serial.println("DIFFERENT");
             //Serial.println(pf - pb);
-            resultFrame->buf[ i ] = (uint8_t) 255;
+            fb->buf[ i ] = (uint8_t) 255;
 
 //laying groundwork for where the centre of gravity' - the average position of all the diferent bits
 
@@ -73,7 +67,7 @@ camera_fb_t * diff(camera_fb_t * fb){
             // same-ish as background
             //Serial.println("SAME");
             //Serial.println(pf - pb);
-            resultFrame->buf[ i ] = (uint8_t) 0;
+            fb->buf[ i ] = (uint8_t) 0;
          }
 
 //background is not the previous frame, instead it's a slowly changing average background
@@ -152,8 +146,4 @@ camera_fb_t * diff(camera_fb_t * fb){
         tilt((int)pos_tilt, (int)(m_attentionY *180), wait);
       
     }
-
-    //Frame::releaseFrame( &frame ); ??
-    return resultFrame;
-
 }
