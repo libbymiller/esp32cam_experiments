@@ -1,0 +1,35 @@
+<html>
+<body>
+<image id="image" style="width:100%;" src="" />
+<div id="status"></div>
+<script type ="text/javascript">
+
+
+const socket = new WebSocket('ws://localhost:80');
+socket.binaryType = 'arraybuffer';
+
+try {
+    socket.onopen = function() {
+        document.getElementById('status').style.backgroundColor = '#40ff40';
+        document.getElementById('status').textContent = 'Connection opened';
+    }
+
+    socket.onmessage = function(msg) {
+        console.log("got msg ",msg.data);
+        var arrayBuffer = msg.data;
+        var bytes = new Uint8Array(arrayBuffer);
+        document.getElementById('image').src = URL.createObjectURL(
+          new Blob([bytes.buffer], { type: 'image/jpeg' } /* (1) */)
+        );
+
+    }
+
+    socket.onclose = function(){
+        document.getElementById('status').style.backgroundColor = '#ff4040';
+        document.getElementById('status').textContent = 'Connection closed';
+    }
+} catch(exception) {
+    console.log('Error:'+exception);
+}
+</script>
+</html>
