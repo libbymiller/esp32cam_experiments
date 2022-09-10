@@ -12,6 +12,8 @@ BasicOTA is getting over the air updates working (which is good because esp32 ca
 
 simple_esp32cam is my initial stab at diffing frames
 
+websockets contains a version using websockets and its own readme.
+
 A couple of things to note
  * to use servos you need to use timers above 2 - see https://stackoverflow.com/questions/64402915/esp32-cam-with-servo-control-wont-work-arduino-ide and https://www.esp32.com/viewtopic.php?t=11379 and to do that you need this servo library https://github.com/RoboticsBrno/ServoESP32
  * To get OTA working I had to edit boards.txt, see below.
