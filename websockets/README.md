@@ -9,7 +9,8 @@ I think it's also probably possible to send more debug info via the websockets t
 
 1. Run the sockets server
 
-     sudo python3 socket_server.py
+     `sudo python3 socket_server.py`
+
 
 (it needed to be port 80 on my laptop, I think my laptop was blocking higher ports)
 
