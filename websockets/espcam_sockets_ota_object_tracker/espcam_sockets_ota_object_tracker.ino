@@ -44,8 +44,8 @@ int servoPin_tilt = 2;
 
 
 //Replace with your network credentials
-const char* ssid = "XXXXXXX";
-const char* password = "XXXXXXXX";
+const char* ssid = "*****";
+const char* password = "*****";
 WebSocketsClient webSocket; // websocket client class instance
 
 #define PART_BOUNDARY "123456789000000000000987654321"
@@ -80,7 +80,20 @@ void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout detector
  
   Serial.begin(115200);
-  Serial.setDebugOutput(false);
+
+  Serial.println("starting");
+  esp_log_level_set("*", ESP_LOG_VERBOSE);
+  pinMode(servoPin_pan, OUTPUT);
+  pinMode(servoPin_tilt, OUTPUT);
+
+  //https://stackoverflow.com/questions/64402915/esp32-cam-with-servo-control-wont-work-arduino-ide
+  //and
+  //https://www.esp32.com/viewtopic.php?t=11379
+  servo_pan.attach(servoPin_pan, 4); 
+  servo_tilt.attach(servoPin_tilt, 5); 
+
+  servo_pan.write(90);
+  servo_tilt.write(90);
   
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -152,8 +165,6 @@ void setup() {
 
 void loop() {
   webSocket.loop();
-
-//  ArduinoOTA.handle();//??here?
   
   delay(1);
   

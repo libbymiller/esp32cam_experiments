@@ -181,8 +181,8 @@ camera_fb_t * diff(camera_fb_t * fb){
         Serial.print((int)(m_attentionX * 180));
         Serial.print(" and y ");
         Serial.println((int)(m_attentionY * 180));
-        ////pan((int)pos_pan, (int)(m_attentionX *180), wait);
-        ////tilt((int)pos_tilt, (int)(m_attentionY *180), wait);
+        pan((int)pos_pan, (int)(m_attentionX *180), wait);
+        tilt((int)pos_tilt, (int)(m_attentionY *180), wait);
 
       
     }
