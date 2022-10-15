@@ -7,6 +7,7 @@ I've used code "borrowed" from Jarkman, with his help, thank you! It uses centre
 https://code.google.com/archive/p/theeyestheeyes/source/default/source?page=4
 
 esp32cam_follower_ota_working is a version of this that works reasonably well for people 1-2 metres away.
+See [Dirk's version](https://github.com/dirkx/esp32cam_experiments/tree/main/esp32cam_follower_ota_working) for lots more features, including telnet logging, lots of different camera configs, PID and own AP.
 
 BasicOTA is getting over the air updates working (which is good because esp32 cameras are annoying to flash)
 
