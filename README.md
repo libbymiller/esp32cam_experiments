@@ -15,6 +15,8 @@ simple_esp32cam is my initial stab at diffing frames
 
 websockets contains a version using websockets and its own readme.
 
+videos in /videos - sunflowers_va_sm.mov is by Hydar Dewachi.
+
 A couple of things to note
  * to use servos you need to use timers above 2 - see https://stackoverflow.com/questions/64402915/esp32-cam-with-servo-control-wont-work-arduino-ide and https://www.esp32.com/viewtopic.php?t=11379 and to do that you need this servo library https://github.com/RoboticsBrno/ServoESP32
  * To get OTA working I had to edit boards.txt, see below.
